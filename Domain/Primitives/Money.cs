@@ -1,6 +1,6 @@
 ﻿using FunctionalProgrammingKit;
 
-namespace Domain;
+namespace Domain.Primitives;
 
 public readonly record struct Money
 {
@@ -27,11 +27,6 @@ public readonly record struct Money
 
 public static class MoneyFunctionality
 {
-    public static ValueObject<Money> Add(this Money money, decimal amount)
-    {
-        return Money.New(money.Amount + amount);
-    }    
-    
     public static ValueObject<Money> Multiply(this Money money, int multiplier)
     {
         return Money.New(money.Amount * multiplier);

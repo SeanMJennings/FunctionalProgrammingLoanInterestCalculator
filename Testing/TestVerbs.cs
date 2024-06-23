@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Primitives;
 using FluentAssertions;
 using FunctionalProgrammingKit;
 namespace Testing;
@@ -40,9 +41,9 @@ internal static class TestVerbs
         testAction.Invoke();
     }
     
-    internal static string WhenValidating(this object previousResult, Func<object, object> func)
+    internal static string WhenValidating<T>(this object previousResult, Func<object, object> func) where T : struct
     {
-        return string.Join("", ((ValueObject<Money>)func.Invoke(previousResult)).Match().Errors[0].Message);
+        return string.Join("", ((ValueObject<T>)func.Invoke(previousResult)).Match().Errors[0].Message);
     }
     
     internal static void ThenInforms(this string actualMessage, string expectedMessage)

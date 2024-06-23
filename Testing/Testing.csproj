@@ -24,6 +24,9 @@
       <Compile Update="Domain\Primitives\Money.steps.cs">
         <DependentUpon>Money.specs.cs</DependentUpon>
       </Compile>
+      <Compile Update="Domain\Primitives\Currency.steps.cs">
+        <DependentUpon>Currency.specs.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

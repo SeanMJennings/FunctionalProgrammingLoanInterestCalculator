@@ -2,7 +2,7 @@
 
 namespace Testing.Domain.Primitives;
 
-public static partial class MoneySpecs
+public static partial class MoneySpecsShould
 {
     [Test]
     public static void provide_amount_to_2_dp()

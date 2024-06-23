@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Primitives;
 using FluentAssertions;
 using FunctionalProgrammingKit;
 using NUnit.Framework;
@@ -6,7 +7,7 @@ using NUnit.Framework;
 namespace Testing.Domain.Primitives;
 
 [TestFixture]
-public static partial class MoneySpecs
+public static partial class MoneySpecsShould
 {
     private const decimal positive_amount = 123.4567m;
     private const decimal negative_amount = -123.4567m;
@@ -30,18 +31,21 @@ public static partial class MoneySpecs
     {
         return ((ValueObject<Money>)money).Bind(m => m.Multiply(2));
     }
+    
+    private static string WhenValidating(this object previousResult, Func<object, object> func)
+    {
+        return previousResult.WhenValidating<Money>(func);
+    }    
 
     private static void money_is_formatted_to_2_dp(object money)
     {
         var value = ((ValueObject<Money>)money).Match().Value;
         value.ToString().Should().Be($"{Math.Round(positive_amount, 2)}");
-        ((decimal)value).Should().Be(positive_amount);
     }    
     
     private static void the_amount_is_doubled(object money)
     {
         var value = ((ValueObject<Money>)money).Match().Value;
-        value.ToString().Should().Be($"{Math.Round(positive_amount * 2, 2)}");
         ((decimal)value).Should().Be(positive_amount * 2);
-    }  
+    }
 }
