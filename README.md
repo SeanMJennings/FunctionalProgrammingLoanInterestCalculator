@@ -1,5 +1,5 @@
 # Functional Programming - Domain Driven Design
-Re-implement the Loan Interest Calculator for banking customers using functional programming, domain driven design, and tes-driven-development.
+Re-implement the Loan Interest Calculator for banking customers using functional programming, domain-driven design, and test-driven development.
 ## Guidelines
 - Produce a small console application.
 - Use an in-memory store.
