@@ -1,0 +1,2 @@
+﻿global using static FunctionalProgrammingKit.ValueObjectExtensions;
+global using static FunctionalProgrammingKit.ReturnWrapperExtensions;
