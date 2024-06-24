@@ -29,7 +29,7 @@ public static partial class CurrencySpecsShould
 
     private static string WhenValidating(this object previousResult, Func<object, object> func)
     {
-        return previousResult.WhenValidating<Currency>(func);
+        return previousResult.WhenValidatingTheValueObject<Currency>(func);
     }
 
     private static void currency_is_created(object currency)

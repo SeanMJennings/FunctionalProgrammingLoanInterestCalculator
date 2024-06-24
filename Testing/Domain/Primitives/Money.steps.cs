@@ -34,7 +34,7 @@ public static partial class MoneySpecsShould
     
     private static string WhenValidating(this object previousResult, Func<object, object> func)
     {
-        return previousResult.WhenValidating<Money>(func);
+        return previousResult.WhenValidatingTheValueObject<Money>(func);
     }    
 
     private static void money_is_formatted_to_2_dp(object money)

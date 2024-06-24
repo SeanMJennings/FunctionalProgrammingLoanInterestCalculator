@@ -1,6 +1,5 @@
 ﻿using Domain.Primitives;
 using FluentAssertions;
-using FunctionalProgrammingKit;
 using NUnit.Framework;
 
 namespace Testing.Domain.Primitives;

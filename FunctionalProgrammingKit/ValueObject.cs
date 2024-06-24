@@ -12,7 +12,6 @@ public readonly struct ValueObject<T>
     {
         return IsValid ? Valid(_value!) : Invalid(_errors.ToArray());
     }
-    
     public ReturnWrapper<T> Match()
     {
         return IsValid ? ValidWrapper(_value!) : InvalidWrapper<T>(_errors.ToArray());
@@ -20,7 +19,7 @@ public readonly struct ValueObject<T>
     public static implicit operator ValueObject<T>(Error error) => CreateInvalid([error]);
 }
 
-public static class ValueObjectExtensions
+public static class ValueObject
 {
     public static ValueObject<T> Valid<T>(T v) => ValueObject<T>.CreateValid(v);
     public static ValueObject<T> Invalid<T>(Error[] errors) => ValueObject<T>.CreateInvalid(errors);

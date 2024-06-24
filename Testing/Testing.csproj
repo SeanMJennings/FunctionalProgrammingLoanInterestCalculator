@@ -30,6 +30,9 @@
       <Compile Update="Domain\Primitives\InterestRate.steps.cs">
         <DependentUpon>InterestRate.specs.cs</DependentUpon>
       </Compile>
+      <Compile Update="Entities\Loan.steps.cs">
+        <DependentUpon>Loan.specs.cs</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

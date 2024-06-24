@@ -1,10 +1,8 @@
-﻿using Domain;
-using Domain.Primitives;
-using FluentAssertions;
+﻿using FluentAssertions;
 using FunctionalProgrammingKit;
 namespace Testing;
 
-internal static class TestVerbs
+internal static class VerbsAndNouns
 {
     internal static object Given(Func<object> func)
     {
@@ -41,9 +39,14 @@ internal static class TestVerbs
         testAction.Invoke();
     }
     
-    internal static string WhenValidating<T>(this object previousResult, Func<object, object> func) where T : struct
+    internal static string WhenValidatingTheValueObject<T>(this object previousResult, Func<object, object> func)
     {
         return string.Join("", ((ValueObject<T>)func.Invoke(previousResult)).Match().Errors[0].Message);
+    }    
+    
+    internal static string WhenValidatingTheEntity<T>(this object previousResult, Func<object, object> func)
+    {
+        return string.Join("", ((ReturnWrapper<T>)func.Invoke(previousResult)).Errors[0].Message);
     }
     
     internal static void ThenInforms(this string actualMessage, string expectedMessage)
