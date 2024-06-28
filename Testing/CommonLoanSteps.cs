@@ -21,12 +21,12 @@ public static class CommonLoanSteps
     public static object a_start_date()
     {
         var builder = new LoanBuilder();
-        return builder.WithStartDate(LocalDate.FromDateTime(DateTime.Parse(start_date_value)));
+        return builder.WithStartDate(Date.ParseDate(start_date_value));
     }
 
     public static object an_end_date(object builder)
     {
-        ((LoanBuilder)builder).WithEndDate(LocalDate.FromDateTime(DateTime.Parse(end_date_value)));
+        ((LoanBuilder)builder).WithEndDate(Date.ParseDate(end_date_value));
         return ((LoanBuilder)builder).WithAccrualDate(Date.Now.Day);
     }
 
@@ -53,20 +53,25 @@ public static class CommonLoanSteps
     public static object the_loan_is_created(object loan)
     {
         var _loan = ((ReturnWrapper<Loan>)loan).Value;
-        _loan.Should().NotBeNull();
-        _loan.Id.Should().Be(loan_id);
-        _loan.StartDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(start_date_value);
-        _loan.EndDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(end_date_value);
-        ((decimal)_loan.Amount).Should().Be(amount_value);
-        _loan.Currency.ToString().Should().Be(US_iso_currency_symbol);
-        _loan.BaseInterestRate.Should().Be(base_interest_rate_value);
-        _loan.MarginInterestRate.Should().Be(margin_interest_rate_value);
+        return the_loan_is_valid(_loan);
+    }    
+    
+    public static object the_loan_is_valid(Loan loan)
+    {
+        loan.Should().NotBeNull();
+        loan.Id.Should().Be(loan_id);
+        loan.StartDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(start_date_value);
+        loan.EndDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(end_date_value);
+        ((decimal)loan.Amount).Should().Be(amount_value);
+        loan.Currency.ToString().Should().Be(US_iso_currency_symbol);
+        loan.BaseInterestRate.Should().Be(base_interest_rate_value);
+        loan.MarginInterestRate.Should().Be(margin_interest_rate_value);
         return loan;
     }
 
     public static void is_formatted_correctly(object loan)
     {
-        var _loan = ((ReturnWrapper<Loan>)loan).Value;
+        var _loan = (Loan)loan;
          var expected_formatting = $"""
              Loan ID: {_loan.Id}
              Period: {_loan.StartDate:yyyy-MM-dd} to {_loan.EndDate:yyyy-MM-dd}

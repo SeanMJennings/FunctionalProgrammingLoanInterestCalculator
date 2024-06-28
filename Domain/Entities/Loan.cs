@@ -8,7 +8,7 @@ namespace Domain.Entities;
 public record Loan
 {
     public uint Id { get; init; }
-    public LocalDate StartDate { get;  init; }
+    public LocalDate StartDate { get; init; }
     public LocalDate EndDate { get; init; }
     public int AccrualDate { get; init; }
     public Money Amount { get; init; }

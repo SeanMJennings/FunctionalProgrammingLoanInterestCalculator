@@ -11,7 +11,6 @@ public class Entity<T>
     private Entity(IEnumerable<Error> errors) => (_errors, _value) = (errors, default!);
 
     public static Entity<T> Valid(T t) => new(t);
-    public static Entity<T> Invalid(Error error) => Invalid(new[] { error });
     public static Entity<T> Invalid(IEnumerable<Error> errors) => new(errors);
 
     public static implicit operator Entity<T>(T t) => Valid(t);
@@ -25,11 +24,15 @@ public class Entity<T>
     public ReturnWrapper<T> Match()
     {
         return IsValid ? ValidWrapper(_value!) : InvalidWrapper<T>(_errors.ToArray());
-    } 
+    }
 }
+
 
 public static class Entity
 {
+    public static Entity<T> Valid<T>(T v) => Entity<T>.Valid(v);
+    public static Entity<T> Invalid<T>(Error[] errors) => Entity<T>.Invalid(errors);
+    
     public static Entity<T> SetValueObject<T, V>(this T entity, ValueObject<V> valueObject, Func<T, V, T> setter)
     {
         return Entity<T>.Valid(entity).SetValueObject(valueObject, setter);

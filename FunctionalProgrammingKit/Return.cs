@@ -2,7 +2,7 @@
 
 public static class Return
 {
-    public static R Match<T,R>(this ValueObject<T> value, Func<T, R> Some, Func<Error[], R> None) => value.IsValid ? Some(value._value!) : None(value._errors);
+    public static R Match<T,R>(this ValueObject<T> value, Func<T, R> Valid, Func<Error[], R> Invalid) => value.IsValid ? Valid(value._value!) : Invalid(value._errors);
 }
 
 public record ReturnWrapper<T>(T Value, Error[] Errors);

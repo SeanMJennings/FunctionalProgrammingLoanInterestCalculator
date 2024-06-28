@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 
-namespace Testing.Entities;
+namespace Testing.Domain.Entities;
 
 public static partial class LoanSpecsShould
 {

@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Actions", "GitHub Ac
 		.github\workflows\BuildAndTest.yaml = .github\workflows\BuildAndTest.yaml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{9C7C0642-C8DE-4BAC-9CC9-B0DA971B76E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,9 @@ Global
 		{338DDE10-0EAC-4AC4-A766-DC8A17915F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{338DDE10-0EAC-4AC4-A766-DC8A17915F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{338DDE10-0EAC-4AC4-A766-DC8A17915F50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C7C0642-C8DE-4BAC-9CC9-B0DA971B76E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7C0642-C8DE-4BAC-9CC9-B0DA971B76E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7C0642-C8DE-4BAC-9CC9-B0DA971B76E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7C0642-C8DE-4BAC-9CC9-B0DA971B76E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

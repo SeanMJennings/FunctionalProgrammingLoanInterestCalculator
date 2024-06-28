@@ -1,9 +1,8 @@
 ﻿using Domain.Entities;
-using FunctionalProgrammingKit;
 using NodaTime;
 using NUnit.Framework;
 
-namespace Testing.Entities;
+namespace Testing.Domain.Entities;
 
 [TestFixture]
 public static partial class LoanSpecsShould
