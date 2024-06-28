@@ -28,7 +28,7 @@ public static partial class LoanSpecsShould
     private static void the_loan_is_listed(object loanDto)
     {
         var getLoans = new Func<IEnumerable<Loan>>(() => loan_repository);
-        the_loan_is_valid(LoanFunctions.ListLoans(getLoans).First().Match().Value);
+        the_loan_is_valid(LoanFunctions.ListLoans(getLoans).First().Data);
         loan_repository.Clear();
     }
 }

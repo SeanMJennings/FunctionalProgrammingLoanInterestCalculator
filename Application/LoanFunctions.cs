@@ -10,14 +10,14 @@ public static class LoanFunctions
     {
         var loanEntity = loanDto.ToLoanEntity(getNextId()).Map(saveLoan);
         return loanEntity.Match(
-            Invalid: ResponseDto<Loan>.Invalid,
-            Valid: ResponseDto<Loan>.Valid);
+            Invalid: errors => new ResponseDto<Loan>(errors),
+            Valid: loan => new ResponseDto<Loan>(loan));
     }
     
     public static IEnumerable<ResponseDto<Loan>> ListLoans(Func<IEnumerable<Loan>> getLoans)
     {
         return getLoans().Select(l => Entity<Loan>.Valid(l).Match(
-            Invalid: ResponseDto<Loan>.Invalid,
-            Valid: ResponseDto<Loan>.Valid));
+            Invalid: errors => new ResponseDto<Loan>(errors),
+            Valid: loan => new ResponseDto<Loan>(loan)));
     }
 }
