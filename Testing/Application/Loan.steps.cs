@@ -23,12 +23,17 @@ public static partial class LoanSpecsShould
         return new CreateLoanDto(Date.ParseDate(start_date_value), Date.ParseDate(end_date_value), amount_value, US_code, base_interest_rate_value, margin_interest_rate_value);
     }    
     
+    private static CreateLoanDto an_invalid_loan_dto()
+    {
+        return new CreateLoanDto(Date.ParseDate(end_date_value), Date.ParseDate(start_date_value), amount_value, US_code, base_interest_rate_value, margin_interest_rate_value);
+    }    
+    
     private static CreateLoanDto another_valid_loan_dto()
     {
         return new CreateLoanDto(Date.ParseDate(new_start_date_value), Date.ParseDate(new_end_date_value), new_amount_value, GB_code, new_base_interest_rate_value, new_margin_interest_rate_value);
     }
     
-    private static ResponseDto<Loan> creating_a_loan(object loanDto)
+    private static object creating_a_loan(object loanDto)
     {
         var saveLoan = new Func<Loan, Loan>(loan =>
         {
@@ -77,6 +82,11 @@ public static partial class LoanSpecsShould
             return loan;
         });
         return LoanFunctions.CreateLoan(loanDto, () => another_loan_id, saveLoan);
+    }
+    
+    private static string WhenValidating(this object previousResult, Func<object, object> func)
+    {
+        return previousResult.WhenValidatingTheResponseDto<Loan>(func);
     }
     
     private static void the_created_loan_is_listed()

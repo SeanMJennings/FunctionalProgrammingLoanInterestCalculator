@@ -21,4 +21,10 @@ public static partial class LoanSpecsShould
     {
         Given(a_loan).And(another_loan).When(listing_loans).Then(the_listed_loans_are_correct);
     }
+    
+    [Test]
+    public static void informs_when_creating_a_loan_fails()
+    {
+        Given(an_invalid_loan_dto).WhenValidating(creating_a_loan).ThenInforms("End date must be after start date.");
+    }
 }

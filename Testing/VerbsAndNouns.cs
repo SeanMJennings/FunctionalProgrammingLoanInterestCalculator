@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using Application;
+using FluentAssertions;
 using FunctionalProgrammingKit;
 namespace Testing;
 
@@ -57,6 +58,11 @@ internal static class VerbsAndNouns
     internal static string WhenValidatingTheEntity<T>(this object previousResult, Func<object, object> func)
     {
         return string.Join("", ((ReturnWrapper<T>)func.Invoke(previousResult)).Errors[0].Message);
+    }    
+    
+    internal static string WhenValidatingTheResponseDto<T>(this object previousResult, Func<object, object> func)
+    {
+        return string.Join("", ((ResponseDto<T>)func.Invoke(previousResult)).Errors.ToArray()[0].Message);
     }
     
     internal static void ThenInforms(this string actualMessage, string expectedMessage)
