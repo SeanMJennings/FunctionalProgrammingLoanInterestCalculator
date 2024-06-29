@@ -1,5 +1,4 @@
-﻿using Application.RequestDtos;
-using Domain.Entities;
+﻿using Domain.Entities;
 using FunctionalProgrammingKit;
 
 namespace Application;

@@ -2,7 +2,7 @@
 using NodaTime;
 using Utilities;
 
-namespace Application.RequestDtos;
+namespace Application;
 
 public record CreateLoanDto(LocalDate StartDate, LocalDate EndDate, decimal Amount, string Currency, decimal BaseInterestRate, decimal MarginInterestRate);
 public record UpdateLoanDto(uint id, LocalDate StartDate, LocalDate EndDate, decimal Amount, string Currency, decimal BaseInterestRate, decimal MarginInterestRate);

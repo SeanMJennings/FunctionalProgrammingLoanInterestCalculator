@@ -4,12 +4,12 @@ namespace Utilities;
 
 public static class Regions
 {
-    public static string[] SupportedCountryCodes()
+    private static string[] SupportedCountryCodes()
     {
         return Country.List.Select(c => c.TwoLetterCode).Order().ToArray();
     }
 
-    public static (string name, string twoLetterCode)[] Countries()
+    public static IEnumerable<(string name, string twoLetterCode)> Countries()
     {
         return Country.List.Select(c => (c.Name, c.TwoLetterCode)).Order().ToArray();
     }

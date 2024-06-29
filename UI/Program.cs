@@ -1,0 +1,3 @@
+﻿using UI;
+
+LoanInterestCalculator.Run();

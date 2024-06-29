@@ -74,7 +74,8 @@ public static class LoanFunctionality
     
     public static int DaysElapsed(LocalDate startDate)
     {
-        return Period.Between(startDate, Date.Now, PeriodUnits.Days).Days;
+        var daysElapsed = Period.Between(startDate, Date.Now, PeriodUnits.Days).Days;
+        return daysElapsed > 0 ? daysElapsed : 0;
     }
     
     public static Money TotalInterest(Money amount, decimal baseInterestRate, decimal marginInterestRate, LocalDate startDate, LocalDate endDate)

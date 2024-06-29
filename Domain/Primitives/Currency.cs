@@ -7,7 +7,6 @@ namespace Domain.Primitives;
 public readonly record struct Currency
 {
     public RegionInfo RegionInfo { get; } = null!;
-    public string Code => RegionInfo.TwoLetterISORegionName;
 
     private Currency(string countryCode)
     {
