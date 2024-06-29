@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Collections.Immutable;
+using System.Globalization;
 using Application;
 using Application.RequestDtos;
 using Domain.Entities;
@@ -12,6 +13,11 @@ namespace Testing.Application;
 public static partial class LoanSpecsShould
 {
     private static readonly List<Loan> loan_repository = [];
+    private static void after_each()
+    {
+        loan_repository.Clear();
+    }
+    
     private static CreateLoanDto a_valid_loan_dto()
     {
         return new CreateLoanDto(Date.ParseDate(start_date_value), Date.ParseDate(end_date_value), amount_value, US_code, base_interest_rate_value, margin_interest_rate_value);
@@ -43,6 +49,12 @@ public static partial class LoanSpecsShould
             return loan_repository[0];
         });
         return LoanFunctions.UpdateLoan(loanDto, updateLoan);
+    }    
+    
+    private static object listing_loans()
+    {
+        var the_loans = new Func<IEnumerable<Loan>>(() => loan_repository.ToImmutableArray());
+        return LoanFunctions.ListLoans(the_loans);
     }     
     
     private static object a_loan()
@@ -71,14 +83,23 @@ public static partial class LoanSpecsShould
     {
         var getLoans = new Func<IEnumerable<Loan>>(() => loan_repository);
         the_loan_is_valid(LoanFunctions.ListLoans(getLoans).First().Data);
-        loan_repository.Clear();
+        after_each();
     }    
     
     private static void the_updated_loan_is_listed(object loanDto)
     {
         var getLoans = new Func<IEnumerable<Loan>>(() => loan_repository);
         the_loan_is_updated(LoanFunctions.ListLoans(getLoans).First().Data);
-        loan_repository.Clear();
+        after_each();
+    }    
+    
+    private static void the_listed_loans_are_correct(object loans)
+    {
+        var _loans = (IEnumerable<ResponseDto<Loan>>)loans;
+        _loans.Count().Should().Be(2);
+        the_loan_is_valid(_loans.First().Data);
+        another_loan_is_valid(_loans.Last().Data);
+        after_each();
     }
     
     private static void the_loan_is_updated(Loan loan)

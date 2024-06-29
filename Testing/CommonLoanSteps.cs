@@ -26,59 +26,70 @@ public static class CommonLoanSteps
     public const decimal margin_interest_rate_value = 2.5m;
     public const decimal new_margin_interest_rate_value = 2.9m;
     
-    public static LoanBuilder a_start_date()
+    public static object a_start_date()
     {
         var builder = new LoanBuilder();
         return builder.WithStartDate(Date.ParseDate(start_date_value));
     }
 
-    public static dynamic an_end_date(dynamic builder)
+    public static object an_end_date(object builder)
     {
-        builder.WithEndDate(Date.ParseDate(end_date_value));
-        return builder.WithAccrualDate(Date.Now.Day);
+        ((LoanBuilder)builder).WithEndDate(Date.ParseDate(end_date_value));
+        return ((LoanBuilder)builder).WithAccrualDate(Date.Now.Day);
     }
 
-    public static dynamic an_amount(dynamic builder)
+    public static object an_amount(object builder)
     {
-        return builder.WithAmount(amount_value);
+        return ((LoanBuilder)builder).WithAmount(amount_value);
     }
 
-    public static dynamic a_currency(dynamic builder)
+    public static object a_currency(object builder)
     {
-        return builder.WithCurrency(US_code);
+        return ((LoanBuilder)builder).WithCurrency(US_code);
     }
 
-    public static dynamic a_base_interest_rate(dynamic builder)
+    public static object a_base_interest_rate(object builder)
     {
-        return builder.WithBaseInterestRate(base_interest_rate_value);
+        return ((LoanBuilder)builder).WithBaseInterestRate(base_interest_rate_value);
     }
 
-    public static dynamic a_margin_interest_rate(dynamic builder)
+    public static object a_margin_interest_rate(object builder)
     {
-        return builder.WithMarginInterestRate(margin_interest_rate_value);
+        return ((LoanBuilder)builder).WithMarginInterestRate(margin_interest_rate_value);
     }
     
-    public static dynamic the_loan_is_created(dynamic loan)
+    public static object the_loan_is_created(object loan)
     {
-        var _loan = loan.Value;
+        var _loan = ((ReturnWrapper<Loan>)loan).Value;
         return the_loan_is_valid(_loan);
     }    
     
-    public static dynamic the_loan_is_valid(dynamic loan)
+    public static object the_loan_is_valid(Loan loan)
     {
-        var _loan = (Loan)loan;
-        _loan.Should().NotBeNull();
-        _loan.Id.Should().Be(loan_id);
-        _loan.StartDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(start_date_value);
-        _loan.EndDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(end_date_value);
-        ((decimal)_loan.Amount).Should().Be(amount_value);
-        _loan.Currency.ToString().Should().Be(US_iso_currency_symbol);
-        _loan.BaseInterestRate.Should().Be(base_interest_rate_value);
-        _loan.MarginInterestRate.Should().Be(margin_interest_rate_value);
-        return _loan;
+        loan.Should().NotBeNull();
+        loan.Id.Should().Be(loan_id);
+        loan.StartDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(start_date_value);
+        loan.EndDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(end_date_value);
+        ((decimal)loan.Amount).Should().Be(amount_value);
+        loan.Currency.ToString().Should().Be(US_iso_currency_symbol);
+        loan.BaseInterestRate.Should().Be(base_interest_rate_value);
+        loan.MarginInterestRate.Should().Be(margin_interest_rate_value);
+        return loan;
+    }    
+    
+    public static void another_loan_is_valid(Loan loan)
+    {
+        loan.Should().NotBeNull();
+        loan.Id.Should().Be(another_loan_id);
+        loan.StartDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(new_start_date_value);
+        loan.EndDate.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture).Should().Be(new_end_date_value);
+        ((decimal)loan.Amount).Should().Be(new_amount_value);
+        loan.Currency.ToString().Should().Be(GB_iso_currency_symbol);
+        loan.BaseInterestRate.Should().Be(new_base_interest_rate_value);
+        loan.MarginInterestRate.Should().Be(new_margin_interest_rate_value);
     }
 
-    public static void is_formatted_correctly(dynamic loan)
+    public static void is_formatted_correctly(object loan)
     {
         var _loan = (Loan)loan;
          var expected_formatting = $"""

@@ -12,12 +12,17 @@ internal static class VerbsAndNouns
     internal static object And(this object previousResult, Func<object, object> func)
     {
         return func.Invoke(previousResult);
+    }    
+    
+    internal static object And(this object _, Func<object> func)
+    {
+        return func.Invoke();
     }
     
     internal static void And(this object previousResult, Action<object> func)
     {
         func.Invoke(previousResult);
-    }
+    }    
 
     internal static object When(this object previousResult, Func<object, object> func)
     {
