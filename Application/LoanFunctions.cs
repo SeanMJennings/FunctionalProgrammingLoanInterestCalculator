@@ -6,7 +6,7 @@ namespace Application;
 
 public static class LoanFunctions
 {
-    public static ResponseDto<Loan> CreateLoan(LoanDto loanDto, Func<uint> getNextId, Func<Loan, Loan> saveLoan)
+    public static ResponseDto<Loan> CreateLoan(CreateLoanDto loanDto, Func<uint> getNextId, Func<Loan, Loan> saveLoan)
     {
         var loanEntity = loanDto.ToLoanEntity(getNextId()).Map(saveLoan);
         return loanEntity.Match(
@@ -19,5 +19,13 @@ public static class LoanFunctions
         return getLoans().Select(l => Entity<Loan>.Valid(l).Match(
             Invalid: errors => new ResponseDto<Loan>(errors),
             Valid: loan => new ResponseDto<Loan>(loan)));
+    }
+    
+    public static ResponseDto<Loan> UpdateLoan(UpdateLoanDto loanDto, Func<Loan, Loan> updateLoan)
+    {
+        var loanEntity = loanDto.ToLoanEntity().Map(updateLoan);
+        return loanEntity.Match(
+            Invalid: errors => new ResponseDto<Loan>(errors),
+            Valid: loan => new ResponseDto<Loan>(loan));
     }
 }

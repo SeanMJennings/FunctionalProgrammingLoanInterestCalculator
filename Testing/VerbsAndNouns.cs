@@ -22,6 +22,11 @@ internal static class VerbsAndNouns
     internal static object When(this object previousResult, Func<object, object> func)
     {
         return func.Invoke(previousResult);
+    }    
+    
+    internal static object When(this object _, Func<object> func)
+    {
+        return func.Invoke();
     }
 
     internal static object Then(this object previousResult, Func<object, object> func)
@@ -32,11 +37,11 @@ internal static class VerbsAndNouns
     internal static void Then(this object previousResult, Action<object> func)
     {
         func.Invoke(previousResult);
-    }
+    }    
     
-    internal static void Scenario(Action testAction)
+    internal static void Then(this object _, Action func)
     {
-        testAction.Invoke();
+        func.Invoke();
     }
     
     internal static string WhenValidatingTheValueObject<T>(this object previousResult, Func<object, object> func)
