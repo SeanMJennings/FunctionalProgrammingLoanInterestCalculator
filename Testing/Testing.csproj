@@ -18,6 +18,7 @@
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\FunctionalProgrammingKit\FunctionalProgrammingKit.csproj" />
+      <ProjectReference Include="..\Persistence\Persistence.csproj" />
       <ProjectReference Include="..\Utilities\Utilities.csproj" />
     </ItemGroup>
 
@@ -33,6 +34,9 @@
       </Compile>
       <Compile Update="Application\Loan.steps.cs">
         <DependentUpon>Loan.specs.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Persistence\Repository.steps.cs">
+        <DependentUpon>Repository.specs.cs</DependentUpon>
       </Compile>
     </ItemGroup>
 

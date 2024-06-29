@@ -10,7 +10,7 @@ namespace Testing;
 public static class CommonLoanSteps
 {
     public const int loan_id = 1;
-    public const int another_loan_id = 1;
+    public const int another_loan_id = 2;
     public const string US_code = "US";
     public const string GB_code = "GB";
     public const string US_iso_currency_symbol = "USD";

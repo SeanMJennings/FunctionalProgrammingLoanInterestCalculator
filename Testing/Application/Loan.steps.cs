@@ -1,10 +1,10 @@
-﻿using System.Collections.Immutable;
-using System.Globalization;
+﻿using System.Globalization;
 using Application;
 using Application.RequestDtos;
 using Domain.Entities;
 using FluentAssertions;
 using NUnit.Framework;
+using Persistence;
 using Utilities;
 
 namespace Testing.Application;
@@ -12,10 +12,9 @@ namespace Testing.Application;
 [TestFixture]
 public static partial class LoanSpecsShould
 {
-    private static readonly List<Loan> loan_repository = [];
     private static void after_each()
     {
-        loan_repository.Clear();
+        Repository._loans.Clear();
     }
     
     private static CreateLoanDto a_valid_loan_dto()
@@ -35,31 +34,18 @@ public static partial class LoanSpecsShould
     
     private static object creating_a_loan(object loanDto)
     {
-        var saveLoan = new Func<Loan, Loan>(loan =>
-        {
-            loan_repository.Add(loan);
-            return loan;
-        });
-        return LoanFunctions.CreateLoan((CreateLoanDto)loanDto, () => loan_id, saveLoan);
+        return LoanFunctions.CreateLoan((CreateLoanDto)loanDto, Repository.NextId, Repository.SaveLoan);
     }    
     
     private static object updating_a_loan()
     {
         var loanDto = new UpdateLoanDto(loan_id, Date.ParseDate(new_start_date_value), Date.ParseDate(new_end_date_value), new_amount_value, GB_code, new_base_interest_rate_value, new_margin_interest_rate_value);
-        var updateLoan = new Func<Loan, Loan>(loan =>
-        {
-            var existing_loan = loan_repository[0];
-            loan_repository[0] = Loan.Create(existing_loan.Id, loan.StartDate, loan.EndDate, existing_loan.AccrualDate,
-                loan.Amount, loan.Currency.Code, loan.BaseInterestRate, loan.MarginInterestRate).Match().Value;
-            return loan_repository[0];
-        });
-        return LoanFunctions.UpdateLoan(loanDto, updateLoan);
+        return LoanFunctions.UpdateLoan(loanDto, Repository.UpdateLoan);
     }    
     
     private static object listing_loans()
     {
-        var the_loans = new Func<IEnumerable<Loan>>(() => loan_repository.ToImmutableArray());
-        return LoanFunctions.ListLoans(the_loans);
+        return LoanFunctions.ListLoans(Repository.GetLoans);
     }     
     
     private static object a_loan()
@@ -76,12 +62,7 @@ public static partial class LoanSpecsShould
     
     private static ResponseDto<Loan> creating_another_loan(CreateLoanDto loanDto)
     {
-        var saveLoan = new Func<Loan, Loan>(loan =>
-        {
-            loan_repository.Add(loan);
-            return loan;
-        });
-        return LoanFunctions.CreateLoan(loanDto, () => another_loan_id, saveLoan);
+        return LoanFunctions.CreateLoan(loanDto, Repository.NextId, Repository.SaveLoan);
     }
     
     private static string WhenValidating(this object previousResult, Func<object, object> func)
@@ -91,15 +72,13 @@ public static partial class LoanSpecsShould
     
     private static void the_created_loan_is_listed()
     {
-        var getLoans = new Func<IEnumerable<Loan>>(() => loan_repository);
-        the_loan_is_valid(LoanFunctions.ListLoans(getLoans).First().Data);
+        the_loan_is_valid(LoanFunctions.ListLoans(Repository.GetLoans).First().Data);
         after_each();
     }    
     
     private static void the_updated_loan_is_listed(object loanDto)
     {
-        var getLoans = new Func<IEnumerable<Loan>>(() => loan_repository);
-        the_loan_is_updated(LoanFunctions.ListLoans(getLoans).First().Data);
+        the_loan_is_updated(LoanFunctions.ListLoans(Repository.GetLoans).First().Data);
         after_each();
     }    
     
